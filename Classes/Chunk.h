@@ -28,6 +28,7 @@ public:
     
     Block*** newBlocks();
     void deleteBlocks(Block*** b);
+    void updateBlocks(Block*** b);
     
     static void makeBlocks(Block*** b);
     static void makeBlocks(Block*** b, int shape);

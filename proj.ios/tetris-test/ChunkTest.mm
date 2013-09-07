@@ -153,4 +153,22 @@
     //STFail(@"test test test");
 }
 
+- (void)testUpdateBlocks {
+    
+    Chunk* c1 = new Chunk();
+    Chunk::makeBlocks(c1->blocks, Chunk::kShape_i);
+    Block*** blocks1 = c1->makeTurnedLeftBlocks();
+    Block* block1 = blocks1[2][0];
+    
+    STAssertTrue(c1->blocks[0][1] != NULL, @"");
+    STAssertTrue(blocks1[2][0] != NULL, @"");
+    STAssertTrue(c1->blocks[0][1] == block1, @"");
+
+    c1->updateBlocks(blocks1);
+    
+    STAssertTrue(c1->blocks[0][1] == NULL, @"");
+    STAssertTrue(c1->blocks[2][0] != NULL, @"");
+    STAssertTrue(c1->blocks[2][0] == block1, @"");
+}
+
 @end

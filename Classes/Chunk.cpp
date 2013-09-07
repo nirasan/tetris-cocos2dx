@@ -9,6 +9,17 @@ Chunk::Chunk()
     blocks = newBlocks();
 }
 
+Chunk::~Chunk()
+{
+    deleteBlocks(blocks);
+}
+
+void Chunk::setPos(int x, int y)
+{
+    posX = x;
+    posY = y;
+}
+
 void Chunk::makeBlocks(Block ***b)
 {
     makeBlocks(b, rand() % kShape_last);
@@ -87,22 +98,22 @@ void Chunk::deleteBlocks(Block ***b)
 {
     for (int i = 0; i < CHUNK_HEIGHT; i++) {
         for (int j = 0; j < CHUNK_WIDTH; j++) {
-            delete b[i][j];
+            delete b[i][j]; b[i][j] = NULL;
         }
-        delete b[i];
+        delete b[i]; b[i] = NULL;
     }
-    delete b;
+    delete b; b = NULL;
 }
 
-Chunk::~Chunk()
+void Chunk::updateBlocks(Block*** b)
 {
-    deleteBlocks(blocks);
-}
-
-void Chunk::setPos(int x, int y)
-{
-    posX = x;
-    posY = y;
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            blocks[i][j] = b[i][j];
+        }
+        delete b[i]; b[i] = NULL;
+    }
+    delete b; b = NULL;
 }
 
 Block*** Chunk::makeTurnedRightBlocks()
