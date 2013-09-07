@@ -2,75 +2,68 @@
 #include "Block.h"
 #include "Config.h"
 
-Chunk::Chunk(int shape)
+Chunk::Chunk()
 :posX(0)
 ,posY(0)
 {
-    /*
-    for (int i = 0; i < CHUNK_HEIGHT; i++) {
-        std::vector<Block*> v;
-        for (int j = 0; j < CHUNK_WIDTH; j++) {
-            v.push_back(NULL);
-        }
-        blocks.push_back(v);
-    }
-    */
-    blocks = new Block**[CHUNK_HEIGHT];
-    for (int i = 0; i < CHUNK_HEIGHT; i++) {
-        blocks[i] = new Block*[CHUNK_WIDTH];
-        for (int j = 0; j < CHUNK_WIDTH; j++) {
-            blocks[i][j] = NULL;
-        }
-    }
-    
+    blocks = newBlocks();
+}
+
+void Chunk::makeBlocks(Block ***b)
+{
+    makeBlocks(b, rand() % kShape_last);
+}
+
+void Chunk::makeBlocks(Block ***b, int shape)
+{
     switch (shape) {
         case kShape_o:
-            blocks[1][1] = new Block();
-            blocks[1][2] = new Block();
-            blocks[2][1] = new Block();
-            blocks[2][2] = new Block();
+            b[1][1] = new Block();
+            b[1][2] = new Block();
+            b[2][1] = new Block();
+            b[2][2] = new Block();
             break;
             
         case kShape_i:
-            blocks[0][1] = new Block();
-            blocks[1][1] = new Block();
-            blocks[2][1] = new Block();
-            blocks[3][1] = new Block();
+            b[0][1] = new Block();
+            b[1][1] = new Block();
+            b[2][1] = new Block();
+            b[3][1] = new Block();
             break;
 
         case kShape_t:
-            blocks[1][1] = new Block();
-            blocks[2][1] = new Block();
-            blocks[2][2] = new Block();
-            blocks[3][1] = new Block();
+            b[1][1] = new Block();
+            b[2][1] = new Block();
+            b[2][2] = new Block();
+            b[3][1] = new Block();
             break;
         
         case kShape_l:
-            blocks[1][1] = new Block();
-            blocks[1][2] = new Block();
-            blocks[2][1] = new Block();
-            blocks[3][1] = new Block();
+            b[1][1] = new Block();
+            b[1][2] = new Block();
+            b[2][1] = new Block();
+            b[3][1] = new Block();
             break;
         
         case kShape_rl:
-            blocks[1][1] = new Block();
-            blocks[1][2] = new Block();
-            blocks[2][2] = new Block();
-            blocks[3][2] = new Block();
+            b[1][1] = new Block();
+            b[1][2] = new Block();
+            b[2][2] = new Block();
+            b[3][2] = new Block();
             break;
             
         case kShape_z:
-            blocks[1][2] = new Block();
-            blocks[2][1] = new Block();
-            blocks[2][2] = new Block();
-            blocks[3][1] = new Block();
+            b[1][2] = new Block();
+            b[2][1] = new Block();
+            b[2][2] = new Block();
+            b[3][1] = new Block();
             break;
         
         case kShape_rz:
-            blocks[1][1] = new Block();
-            blocks[2][1] = new Block();
-            blocks[2][2] = new Block();
-            blocks[3][2] = new Block();
+            b[1][1] = new Block();
+            b[2][1] = new Block();
+            b[2][2] = new Block();
+            b[3][2] = new Block();
             break;
             
         default:
@@ -78,15 +71,32 @@ Chunk::Chunk(int shape)
     }
 }
 
-Chunk::~Chunk()
+Block*** Chunk::newBlocks()
+{
+    Block*** b = new Block**[CHUNK_HEIGHT];
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        b[i] = new Block*[CHUNK_WIDTH];
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            b[i][j] = NULL;
+        }
+    }
+    return b;
+}
+
+void Chunk::deleteBlocks(Block ***b)
 {
     for (int i = 0; i < CHUNK_HEIGHT; i++) {
         for (int j = 0; j < CHUNK_WIDTH; j++) {
-            delete blocks[i][j];
+            delete b[i][j];
         }
-        delete blocks[i];
+        delete b[i];
     }
-    delete blocks;
+    delete b;
+}
+
+Chunk::~Chunk()
+{
+    deleteBlocks(blocks);
 }
 
 void Chunk::setPos(int x, int y)

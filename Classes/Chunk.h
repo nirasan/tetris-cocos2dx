@@ -10,7 +10,6 @@ public:
     
     int posX;
     int posY;
-    //std::vector< std::vector<Block*> > blocks;
     Block*** blocks;
     
     enum kShape {
@@ -21,10 +20,17 @@ public:
         kShape_rl,
         kShape_z,
         kShape_rz,
+        kShape_last,
     };
     
-    Chunk(int shape);
+    Chunk();
     ~Chunk();
+    
+    Block*** newBlocks();
+    void deleteBlocks(Block*** b);
+    
+    static void makeBlocks(Block*** b);
+    static void makeBlocks(Block*** b, int shape);
     
     void setPos(int x, int y);
 };

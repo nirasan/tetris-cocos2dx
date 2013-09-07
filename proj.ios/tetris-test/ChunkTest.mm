@@ -6,7 +6,8 @@
 
 - (void)testChunk {
     
-    Chunk* c1 = new Chunk(Chunk::kShape_o);
+    Chunk* c1 = new Chunk();
+    Chunk::makeBlocks(c1->blocks, Chunk::kShape_o);
     auto b1 = c1->blocks;
     
     STAssertTrue(b1[0][0] == NULL, @"");
@@ -30,7 +31,8 @@
     
     delete b1;
     
-    Chunk* c2 = new Chunk(Chunk::kShape_i);
+    Chunk* c2 = new Chunk();
+    Chunk::makeBlocks(c2->blocks, Chunk::kShape_i);
     auto b2 = c2->blocks;
     
     STAssertTrue(b2[0][0] == NULL, @"");
