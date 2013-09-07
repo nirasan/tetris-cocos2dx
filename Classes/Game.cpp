@@ -21,11 +21,11 @@ void Game::moveLeft()
 
 bool Game::canMoveLeft()
 {
-    for (int i = chunk->posY; i < chunk->posY + CHUNK_HEIGHT; i++) {
-        for (int j = chunk->posX; j < chunk->posX + CHUNK_WIDTH; j++) {
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
             if (chunk->blocks[i][j] != NULL) {
-                int leftX = j - 1;
-                if (leftX < 0) return false;
+                int leftX = chunk->posX + j - 1;
+                if (leftX < FIELD_WIDTH_LEFT_INDEX) return false;
                 if (field->blocks[i][leftX] != NULL) return false;
                 break;                
             }

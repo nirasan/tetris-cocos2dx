@@ -5,8 +5,11 @@
 #define CHUNK_WIDTH  4
 
 #define FIELD_HEIGHT 24
-#define FIELD_WIDTH  10
+#define FIELD_WIDTH  16
 
-#define FIELD_DEAD_HEIGHT 4
+#define FIELD_HEIGHT_UPPER_INDEX 4
+#define FIELD_WIDTH_LEFT_INDEX   3
+#define FIELD_WIDTH_RIGHT_INDEX  12
+
 
 #endif

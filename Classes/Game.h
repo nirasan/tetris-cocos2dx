@@ -8,11 +8,11 @@
 
 class Game
 {
-private:
+public:
+    
     Field* field;
     Chunk* chunk;
-    
-public:
+
     Game();
     ~Game();
     
