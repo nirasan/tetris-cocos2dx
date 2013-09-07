@@ -2,6 +2,7 @@
 #import "Game.h"
 #import "Chunk.h"
 #import "Field.h"
+#import "Block.h"
 
 @implementation GameTest
 
@@ -40,6 +41,7 @@
     game->chunk->setPos(0, (FIELD_HEIGHT - 1) - (CHUNK_HEIGHT - 1));
     
     STAssertTrue(game->canMoveUnder(), @"下に1行余裕あるので真");
+    STAssertTrue(game->chunk->blocks[1][1]->getNumber() == 0, @"block[1][1] 's id = %d", game->chunk->blocks[1][1]->getNumber());
     
     game->moveUnder();
     STAssertTrue(game->chunk->posY == (FIELD_HEIGHT - 1) - (CHUNK_HEIGHT - 1) + 1, @"一番下の列");

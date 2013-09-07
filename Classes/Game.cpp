@@ -27,8 +27,9 @@ void Game::moveRight()
 
 void Game::moveUnder()
 {
-    if (canMoveUnder())
+    if (canMoveUnder()) {
         chunk->posY = chunk->posY + 1;
+    }
 }
 
 bool Game::canMoveLeft()
@@ -63,15 +64,18 @@ bool Game::canMoveRight()
 
 bool Game::canMoveUnder()
 {
+    bool checked = false;
     for (int i = 0; i < CHUNK_WIDTH; i++) {
         for (int j = CHUNK_HEIGHT - 1; j > 0; j--) {
             if (chunk->blocks[i][j] != NULL) {
                 int underY = chunk->posY + j + 1;
                 if (underY > FIELD_HEIGHT - 1) return false;
                 if (field->blocks[underY][i] != NULL) return false;
+                checked = true;
                 break;
             }
         }
     }
-    return true;
+    return checked;
 }
+

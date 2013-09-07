@@ -7,6 +7,7 @@ class Block
 {
 private:
     
+    int number;
     int color;
     
 public:
@@ -15,9 +16,10 @@ public:
         kColor_White,
     };
     
-    Block();
+    Block(int number, int color);
     ~Block();
     
+    int getNumber();
     int getColor();
 };
 

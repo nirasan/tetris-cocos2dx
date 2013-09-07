@@ -32,6 +32,7 @@ public:
     
     static void makeBlocks(Block*** b);
     static void makeBlocks(Block*** b, int shape);
+    static void makeBlocks(Block*** b, int shape, int numbers[]);
     
     Block*** makeTurnedRightBlocks();
     Block*** makeTurnedLeftBlocks();

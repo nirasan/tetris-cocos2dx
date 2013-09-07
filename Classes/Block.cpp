@@ -1,12 +1,18 @@
 #include "Block.h"
 
-Block::Block()
-:color(kColor_White)
+Block::Block(int number, int color)
+:number(number)
+,color(color)
 {
 }
 
 Block::~Block()
 {
+}
+
+int Block::getNumber()
+{
+    return number;
 }
 
 int Block::getColor()

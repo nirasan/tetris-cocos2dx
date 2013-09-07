@@ -22,59 +22,68 @@ void Chunk::setPos(int x, int y)
 
 void Chunk::makeBlocks(Block ***b)
 {
-    makeBlocks(b, rand() % kShape_last);
+    int ids[] = {0, 1, 2, 3};
+    makeBlocks(b, rand() % kShape_last, ids);
 }
 
 void Chunk::makeBlocks(Block ***b, int shape)
 {
+    int ids[] = {0, 1, 2, 3};
+    makeBlocks(b, shape, ids);
+}
+
+void Chunk::makeBlocks(Block ***b, int shape, int ids[])
+{
+    int color = Block::kColor_White;
+    
     switch (shape) {
         case kShape_o:
-            b[1][1] = new Block();
-            b[1][2] = new Block();
-            b[2][1] = new Block();
-            b[2][2] = new Block();
+            b[1][1] = new Block(ids[0], color);
+            b[1][2] = new Block(ids[1], color);
+            b[2][1] = new Block(ids[2], color);
+            b[2][2] = new Block(ids[3], color);
             break;
             
         case kShape_i:
-            b[0][1] = new Block();
-            b[1][1] = new Block();
-            b[2][1] = new Block();
-            b[3][1] = new Block();
+            b[0][1] = new Block(ids[0], color);
+            b[1][1] = new Block(ids[1], color);
+            b[2][1] = new Block(ids[2], color);
+            b[3][1] = new Block(ids[3], color);
             break;
 
         case kShape_t:
-            b[1][1] = new Block();
-            b[2][1] = new Block();
-            b[2][2] = new Block();
-            b[3][1] = new Block();
+            b[1][1] = new Block(ids[0], color);
+            b[2][1] = new Block(ids[1], color);
+            b[2][2] = new Block(ids[2], color);
+            b[3][1] = new Block(ids[3], color);
             break;
         
         case kShape_l:
-            b[1][1] = new Block();
-            b[1][2] = new Block();
-            b[2][1] = new Block();
-            b[3][1] = new Block();
+            b[1][1] = new Block(ids[0], color);
+            b[1][2] = new Block(ids[1], color);
+            b[2][1] = new Block(ids[2], color);
+            b[3][1] = new Block(ids[3], color);
             break;
         
         case kShape_rl:
-            b[1][1] = new Block();
-            b[1][2] = new Block();
-            b[2][2] = new Block();
-            b[3][2] = new Block();
+            b[1][1] = new Block(ids[0], color);
+            b[1][2] = new Block(ids[1], color);
+            b[2][2] = new Block(ids[2], color);
+            b[3][2] = new Block(ids[3], color);
             break;
             
         case kShape_z:
-            b[1][2] = new Block();
-            b[2][1] = new Block();
-            b[2][2] = new Block();
-            b[3][1] = new Block();
+            b[1][2] = new Block(ids[0], color);
+            b[2][1] = new Block(ids[1], color);
+            b[2][2] = new Block(ids[2], color);
+            b[3][1] = new Block(ids[3], color);
             break;
         
         case kShape_rz:
-            b[1][1] = new Block();
-            b[2][1] = new Block();
-            b[2][2] = new Block();
-            b[3][2] = new Block();
+            b[1][1] = new Block(ids[0], color);
+            b[2][1] = new Block(ids[1], color);
+            b[2][2] = new Block(ids[2], color);
+            b[3][2] = new Block(ids[3], color);
             break;
             
         default:

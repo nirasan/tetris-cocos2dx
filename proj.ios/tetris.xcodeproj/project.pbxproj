@@ -209,6 +209,9 @@
 		42003A5917C9B94C00E3A961 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		42003A5F17C9B94D00E3A961 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42003A5D17C9B94D00E3A961 /* InfoPlist.strings */; };
 		42003A6217C9B94D00E3A961 /* tetris_test.m in Sources */ = {isa = PBXBuildFile; fileRef = 42003A6117C9B94D00E3A961 /* tetris_test.m */; };
+		420E62C017DB0F0600FB8E5E /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 420E62BE17DB0F0600FB8E5E /* Game.cpp */; };
+		420E62C317DB164000FB8E5E /* GameTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 420E62C217DB164000FB8E5E /* GameTest.mm */; };
+		420E62C617DB682C00FB8E5E /* FieldTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 420E62C517DB682C00FB8E5E /* FieldTest.mm */; };
 		42F4701717D337ED006F2886 /* Block.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F4701517D337ED006F2886 /* Block.cpp */; };
 		42F4701B17D33B17006F2886 /* Chunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F4701917D33B17006F2886 /* Chunk.cpp */; };
 		42F4701F17D34B17006F2886 /* Field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42F4701D17D34B17006F2886 /* Field.cpp */; };
@@ -657,6 +660,12 @@
 		42003A6017C9B94D00E3A961 /* tetris_test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tetris_test.h; sourceTree = "<group>"; };
 		42003A6117C9B94D00E3A961 /* tetris_test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = tetris_test.m; sourceTree = "<group>"; };
 		42003A6317C9B94D00E3A961 /* tetris-test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tetris-test-Prefix.pch"; sourceTree = "<group>"; };
+		420E62BE17DB0F0600FB8E5E /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../Classes/Game.cpp; sourceTree = "<group>"; };
+		420E62BF17DB0F0600FB8E5E /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../Classes/Game.h; sourceTree = "<group>"; };
+		420E62C117DB164000FB8E5E /* GameTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTest.h; sourceTree = "<group>"; };
+		420E62C217DB164000FB8E5E /* GameTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameTest.mm; sourceTree = "<group>"; };
+		420E62C417DB682C00FB8E5E /* FieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FieldTest.h; sourceTree = SOURCE_ROOT; };
+		420E62C517DB682C00FB8E5E /* FieldTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FieldTest.mm; sourceTree = SOURCE_ROOT; };
 		42F4701517D337ED006F2886 /* Block.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Block.cpp; path = ../Classes/Block.cpp; sourceTree = "<group>"; };
 		42F4701617D337ED006F2886 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Block.h; path = ../Classes/Block.h; sourceTree = "<group>"; };
 		42F4701917D33B17006F2886 /* Chunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Chunk.cpp; path = ../Classes/Chunk.cpp; sourceTree = "<group>"; };
@@ -1221,6 +1230,8 @@
 				42F4701C17D34267006F2886 /* Config.h */,
 				42F4701D17D34B17006F2886 /* Field.cpp */,
 				42F4701E17D34B17006F2886 /* Field.h */,
+				420E62BE17DB0F0600FB8E5E /* Game.cpp */,
+				420E62BF17DB0F0600FB8E5E /* Game.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -1526,6 +1537,10 @@
 				42003A5B17C9B94D00E3A961 /* Supporting Files */,
 				42F4702317D376F5006F2886 /* ChunkTest.h */,
 				42F4702417D376F5006F2886 /* ChunkTest.mm */,
+				420E62C117DB164000FB8E5E /* GameTest.h */,
+				420E62C217DB164000FB8E5E /* GameTest.mm */,
+				420E62C417DB682C00FB8E5E /* FieldTest.h */,
+				420E62C517DB682C00FB8E5E /* FieldTest.mm */,
 			);
 			path = "tetris-test";
 			sourceTree = "<group>";
@@ -1882,6 +1897,7 @@
 				42F4701717D337ED006F2886 /* Block.cpp in Sources */,
 				42F4701B17D33B17006F2886 /* Chunk.cpp in Sources */,
 				42F4701F17D34B17006F2886 /* Field.cpp in Sources */,
+				420E62C017DB0F0600FB8E5E /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1891,6 +1907,8 @@
 			files = (
 				42003A6217C9B94D00E3A961 /* tetris_test.m in Sources */,
 				42F4702517D376F5006F2886 /* ChunkTest.mm in Sources */,
+				420E62C317DB164000FB8E5E /* GameTest.mm in Sources */,
+				420E62C617DB682C00FB8E5E /* FieldTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

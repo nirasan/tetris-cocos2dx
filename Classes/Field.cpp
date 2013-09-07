@@ -1,4 +1,6 @@
 #include "Field.h"
+#include "Chunk.h"
+#include "Block.h"
 
 Field::Field()
 {
@@ -21,4 +23,5 @@ Field::~Field()
     }
     delete blocks; blocks = NULL;
 }
+
 
