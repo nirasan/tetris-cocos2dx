@@ -104,3 +104,33 @@ void Chunk::setPos(int x, int y)
     posX = x;
     posY = y;
 }
+
+Block*** Chunk::makeTurnedRightBlocks()
+{
+    Block*** turned = newBlocks();
+    
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            int turned_x = CHUNK_WIDTH - 1 - i;
+            int turned_y = j;
+            turned[turned_y][turned_x] = blocks[i][j];
+        }
+    }
+    
+    return turned;
+}
+
+Block*** Chunk::makeTurnedLeftBlocks()
+{
+    Block*** turned = newBlocks();
+    
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            int turned_x = i;
+            int turned_y = CHUNK_WIDTH - 1 -j;
+            turned[turned_y][turned_x] = blocks[i][j];
+        }
+    }
+    
+    return turned;
+}

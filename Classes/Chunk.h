@@ -32,6 +32,9 @@ public:
     static void makeBlocks(Block*** b);
     static void makeBlocks(Block*** b, int shape);
     
+    Block*** makeTurnedRightBlocks();
+    Block*** makeTurnedLeftBlocks();
+    
     void setPos(int x, int y);
 };
 
