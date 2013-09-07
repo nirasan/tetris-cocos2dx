@@ -18,11 +18,11 @@ public:
     
     void moveLeft();
     void moveRight();
-    void moveDown();
+    void moveUnder();
     
     bool canMoveLeft();
     bool canMoveRight();
-    bool canMoveDown();
+    bool canMoveUnder();
     
     void turnLeft();
     void turnRight();
