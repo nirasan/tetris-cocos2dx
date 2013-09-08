@@ -46,6 +46,25 @@
     game->moveUnder();
     STAssertTrue(game->chunk->posY == (FIELD_HEIGHT - 1) - (CHUNK_HEIGHT - 1) + 1, @"一番下の列");
     STAssertTrue(!game->canMoveUnder(), @"下に余裕無いので偽");
+    
+    STAssertTrue(game->chunk->blocks[1][1] == NULL, @"");
+    STAssertTrue(game->field->blocks[22][1]->getNumber() == 0, @"block[22][1] 's id = %d", game->field->blocks[22][1]->getNumber());
+    STAssertTrue(game->field->blocks[22][1] != NULL, @"");
+    STAssertTrue(game->field->blocks[22][2] != NULL, @"");
+    STAssertTrue(game->field->blocks[23][1] != NULL, @"");
+    STAssertTrue(game->field->blocks[23][2] != NULL, @"");
+    
+    for (int i = 0; i < FIELD_HEIGHT; i++) {
+        for (int j = 0; j < FIELD_WIDTH; j++) {
+            //STAssertTrue(game->field->blocks[i][j] == NULL, @"===== x:%d y:%d =====", j, i);
+        }
+    }
+    /*
+     NSLog(@"number is %d", game->field->blocks[22][1]->getNumber());
+     NSLog(@"number is %d", game->field->blocks[22][2]->getNumber());
+     NSLog(@"number is %d", game->field->blocks[23][1]->getNumber());
+     NSLog(@"number is %d", game->field->blocks[23][2]->getNumber());
+     */
 }
 
 @end

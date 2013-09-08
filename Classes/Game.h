@@ -24,6 +24,8 @@ public:
     bool canMoveRight();
     bool canMoveUnder();
     
+    void copyBlocks();
+    
     void turnLeft();
     void turnRight();
 

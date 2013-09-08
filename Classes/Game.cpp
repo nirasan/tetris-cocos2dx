@@ -29,6 +29,8 @@ void Game::moveUnder()
 {
     if (canMoveUnder()) {
         chunk->posY = chunk->posY + 1;
+        
+        copyBlocks();
     }
 }
 
@@ -79,3 +81,16 @@ bool Game::canMoveUnder()
     return checked;
 }
 
+void Game::copyBlocks()
+{
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            int y = i + chunk->posY;
+            int x = j + chunk->posX;
+            if (chunk->blocks[i][j] != NULL) {
+                field->blocks[y][x] = chunk->blocks[i][j];
+                chunk->blocks[i][j] = NULL;
+            }
+        }
+    }
+}
