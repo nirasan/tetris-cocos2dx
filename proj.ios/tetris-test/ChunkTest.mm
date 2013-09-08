@@ -59,7 +59,7 @@
     //STFail(@"test test test");
 }
 
-- (void)testMakeTurnedLeftBlocks {
+- (void)testTurnLeft {
     
     Chunk* c1 = new Chunk();
     Chunk::makeBlocks(c1->blocks, Chunk::kShape_i);
@@ -82,7 +82,8 @@
     STAssertTrue(b1[3][2] == NULL, @"");
     STAssertTrue(b1[3][3] == NULL, @"");
     
-    Block*** b2 = c1->makeTurnedLeftBlocks();
+    c1->turnLeft();
+    Block*** b2 = c1->blocks;
     
     STAssertTrue(b2[0][0] == NULL, @"");
     STAssertTrue(b2[0][1] == NULL, @"");
@@ -106,7 +107,7 @@
     //STFail(@"test test test");
 }
 
-- (void)testMakeTurnedRightBlocks {
+- (void)testTurnRight {
     
     Chunk* c1 = new Chunk();
     Chunk::makeBlocks(c1->blocks, Chunk::kShape_i);
@@ -129,7 +130,8 @@
     STAssertTrue(b1[3][2] == NULL, @"");
     STAssertTrue(b1[3][3] == NULL, @"");
     
-    Block*** b2 = c1->makeTurnedRightBlocks();
+    c1->turnRight();
+    Block*** b2 = c1->blocks;
     
     STAssertTrue(b2[0][0] == NULL, @"");
     STAssertTrue(b2[0][1] == NULL, @"");
@@ -151,24 +153,6 @@
     //STAssertTrue(b2[1][0]->getColor() == Block::kColor_White, @"");
     
     //STFail(@"test test test");
-}
-
-- (void)testUpdateBlocks {
-    
-    Chunk* c1 = new Chunk();
-    Chunk::makeBlocks(c1->blocks, Chunk::kShape_i);
-    Block*** blocks1 = c1->makeTurnedLeftBlocks();
-    Block* block1 = blocks1[2][0];
-    
-    STAssertTrue(c1->blocks[0][1] != NULL, @"");
-    STAssertTrue(blocks1[2][0] != NULL, @"");
-    STAssertTrue(c1->blocks[0][1] == block1, @"");
-
-    c1->updateBlocks(blocks1);
-    
-    STAssertTrue(c1->blocks[0][1] == NULL, @"");
-    STAssertTrue(c1->blocks[2][0] != NULL, @"");
-    STAssertTrue(c1->blocks[2][0] == block1, @"");
 }
 
 @end

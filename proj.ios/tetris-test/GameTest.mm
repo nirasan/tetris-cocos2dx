@@ -67,4 +67,35 @@
      */
 }
 
+- (void)testConflict {
+    Game* game = new Game();
+    Chunk::makeBlocks(game->chunk->blocks, Chunk::kShape_i); // 0,1 : 1,1 : 2,1 : 3,1
+    
+    game->chunk->setPos(0, 0);
+    STAssertTrue(game->isConflict(), @"画面外なので真（左側境界）");
+    
+    game->chunk->setPos(FIELD_WIDTH_LEFT_INDEX, 0);
+    STAssertTrue(!game->isConflict(), @"画面内なので偽");
+    
+    game->turnLeft(); // 2,0 : 2,1 : 2,2 : 2,3
+    game->chunk->setPos(FIELD_WIDTH_LEFT_INDEX, 0);
+    STAssertTrue(!game->isConflict(), @"画面内なので偽");
+    
+    game->chunk->setPos(FIELD_WIDTH_LEFT_INDEX-1, 0);
+    STAssertTrue(game->isConflict(), @"画面外なので真（左側境界）");
+    
+    game->chunk->setPos(FIELD_WIDTH_RIGHT_INDEX, 0);
+    STAssertTrue(game->isConflict(), @"画面外なので真（右側境界）");
+    
+    game->chunk->setPos(FIELD_WIDTH_RIGHT_INDEX-2, 0);
+    game->turnLeft(); // 0,2 : 1,2 : 2,2 : 3,2
+    STAssertTrue(!game->isConflict(), @"画面内なので偽");
+    
+    game->chunk->setPos(FIELD_WIDTH_LEFT_INDEX, FIELD_HEIGHT-CHUNK_HEIGHT);
+    STAssertTrue(!game->isConflict(), @"画面内なので偽（下側境界）");
+
+    game->chunk->setPos(FIELD_WIDTH_LEFT_INDEX, FIELD_HEIGHT-CHUNK_HEIGHT+1);
+    STAssertTrue(game->isConflict(), @"画面外なので真（下側境界）");
+}
+
 @end

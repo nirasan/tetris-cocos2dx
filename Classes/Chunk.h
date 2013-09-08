@@ -11,6 +11,7 @@ public:
     int posX;
     int posY;
     Block*** blocks;
+    Block*** tmpBlocks;
     
     enum kShape {
         kShape_o,
@@ -28,14 +29,14 @@ public:
     
     Block*** newBlocks();
     void deleteBlocks(Block*** b);
-    void updateBlocks(Block*** b);
-    
+
     static void makeBlocks(Block*** b);
     static void makeBlocks(Block*** b, int shape);
     static void makeBlocks(Block*** b, int shape, int numbers[]);
     
-    Block*** makeTurnedRightBlocks();
-    Block*** makeTurnedLeftBlocks();
+    void turnLeft();
+    void turnRight();
+    void tmpToMain();
     
     void setPos(int x, int y);
 };

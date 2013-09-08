@@ -7,11 +7,13 @@ Chunk::Chunk()
 ,posY(0)
 {
     blocks = newBlocks();
+    tmpBlocks = newBlocks();
 }
 
 Chunk::~Chunk()
 {
     deleteBlocks(blocks);
+    deleteBlocks(tmpBlocks);
 }
 
 void Chunk::setPos(int x, int y)
@@ -114,43 +116,36 @@ void Chunk::deleteBlocks(Block ***b)
     delete b; b = NULL;
 }
 
-void Chunk::updateBlocks(Block*** b)
+void Chunk::turnRight()
 {
-    for (int i = 0; i < CHUNK_HEIGHT; i++) {
-        for (int j = 0; j < CHUNK_WIDTH; j++) {
-            blocks[i][j] = b[i][j];
-        }
-        delete b[i]; b[i] = NULL;
-    }
-    delete b; b = NULL;
-}
-
-Block*** Chunk::makeTurnedRightBlocks()
-{
-    Block*** turned = newBlocks();
-    
     for (int i = 0; i < CHUNK_HEIGHT; i++) {
         for (int j = 0; j < CHUNK_WIDTH; j++) {
             int turned_x = CHUNK_WIDTH - 1 - i;
             int turned_y = j;
-            turned[turned_y][turned_x] = blocks[i][j];
+            tmpBlocks[turned_y][turned_x] = blocks[i][j];
         }
     }
-    
-    return turned;
+    tmpToMain();
 }
 
-Block*** Chunk::makeTurnedLeftBlocks()
+void Chunk::turnLeft()
 {
-    Block*** turned = newBlocks();
-    
     for (int i = 0; i < CHUNK_HEIGHT; i++) {
         for (int j = 0; j < CHUNK_WIDTH; j++) {
             int turned_x = i;
             int turned_y = CHUNK_WIDTH - 1 -j;
-            turned[turned_y][turned_x] = blocks[i][j];
+            tmpBlocks[turned_y][turned_x] = blocks[i][j];
         }
     }
-    
-    return turned;
+    tmpToMain();
+}
+
+void Chunk::tmpToMain()
+{
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            blocks[i][j] = tmpBlocks[i][j];
+            tmpBlocks[i][j] = NULL;
+        }
+    }
 }

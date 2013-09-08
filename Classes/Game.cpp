@@ -1,5 +1,8 @@
 #include "Game.h"
 #include "Config.h"
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 Game::Game()
 {
@@ -93,4 +96,40 @@ void Game::copyBlocks()
             }
         }
     }
+}
+
+void Game::turnLeft()
+{
+    chunk->turnLeft();
+    if (isConflict()) {
+        chunk->turnRight();
+    }
+}
+
+void Game::turnRight()
+{
+    chunk->turnRight();
+    if (isConflict()) {
+        chunk->turnLeft();
+    }
+}
+
+bool Game::isConflict()
+{
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            int y = i + chunk->posY;
+            int x = j + chunk->posX;
+            if (chunk->blocks[i][j] != NULL) {
+                CCLOG("===== i:%d j:%d x:%d y:%d", i, j, x, y);
+                if (y < 0 || FIELD_HEIGHT-1 < y) return true;
+                CCLOG("===== %d", 1);
+                if (x < FIELD_WIDTH_LEFT_INDEX || FIELD_WIDTH_RIGHT_INDEX < x) return true;
+                CCLOG("===== %d", 2);
+                if (field->blocks[y][x] != NULL) return true;
+                CCLOG("===== %d", 3);
+            }
+        }
+    }
+    return false;
 }
