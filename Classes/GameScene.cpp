@@ -36,7 +36,15 @@ void GameScene::makeControlButton()
     CCMenuItemLabel* moveRight = CCMenuItemLabel::create(moveRightLabel, this, menu_selector(GameScene::tapMoveRight));
     moveRight->setPosition(winSize.width * 0.2, winSize.height * 0.2);
 
-    CCMenu* menu = CCMenu::create(moveLeft, moveRight, NULL);
+    CCLabelTTF* turnLeftLabel = CCLabelTTF::create("左", "Arial", 24.0);
+    CCMenuItemLabel* turnLeft = CCMenuItemLabel::create(turnLeftLabel, this, menu_selector(GameScene::tapTurnLeft));
+    turnLeft->setPosition(winSize.width * 0.8, winSize.height * 0.2);
+    
+    CCLabelTTF* turnRightLabel = CCLabelTTF::create("右", "Arial", 24.0);
+    CCMenuItemLabel* turnRight = CCMenuItemLabel::create(turnRightLabel, this, menu_selector(GameScene::tapTurnRight));
+    turnRight->setPosition(winSize.width * 0.9, winSize.height * 0.2);
+    
+    CCMenu* menu = CCMenu::create(moveLeft, moveRight, turnLeft, turnRight, NULL);
     menu->setPosition(CCPointZero);
     this->addChild(menu);
 }
@@ -47,6 +55,16 @@ void GameScene::tapMoveLeft()
 }
 
 void GameScene::tapMoveRight()
+{
+    
+}
+
+void GameScene::tapTurnLeft()
+{
+    
+}
+
+void GameScene::tapTurnRight()
 {
     
 }

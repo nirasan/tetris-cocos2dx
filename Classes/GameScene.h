@@ -9,6 +9,8 @@ private:
     void makeControlButton();
     void tapMoveLeft();
     void tapMoveRight();
+    void tapTurnLeft();
+    void tapTurnRight();
     
 public:
     virtual bool init();
