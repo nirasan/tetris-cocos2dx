@@ -12,6 +12,7 @@ public:
     
     Field* field;
     Chunk* chunk;
+    bool* deletableLines;
 
     Game();
     ~Game();
@@ -30,6 +31,9 @@ public:
     void turnRight();
 
     bool isConflict();
+    
+    void checkDeletableLines();
+    void deleteDeletableLines();
 };
 
 #endif /* defined(__tetris__Game__) */

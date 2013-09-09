@@ -98,4 +98,40 @@
     STAssertTrue(game->isConflict(), @"画面外なので真（下側境界）");
 }
 
+- (void)testDelete {
+    Game* game = new Game();
+    
+    for (int i = FIELD_WIDTH_LEFT_INDEX; i <= FIELD_WIDTH_RIGHT_INDEX; i++) {
+        if (i % 2 == 0) game->field->blocks[5][i] = new Block(50 + i, Block::kColor_White);
+        game->field->blocks[10][i] = new Block(100 + i, Block::kColor_White);
+        if (i % 2 == 0) game->field->blocks[15][i] = new Block(150 + i, Block::kColor_White);
+        game->field->blocks[20][i] = new Block(200 + i, Block::kColor_White);
+    }
+    
+    game->checkDeletableLines();
+    
+    STAssertTrue(game->deletableLines[5]  == false, @"");
+    STAssertTrue(game->deletableLines[10] == true, @"");
+    STAssertTrue(game->deletableLines[15] == false, @"");
+    STAssertTrue(game->deletableLines[20] == true, @"");
+    
+    game->deleteDeletableLines();
+    
+    STAssertTrue(game->deletableLines[5]  == false, @"");
+    STAssertTrue(game->deletableLines[10] == false, @"");
+    STAssertTrue(game->deletableLines[15] == false, @"");
+    STAssertTrue(game->deletableLines[20] == false, @"");
+    
+    STAssertTrue(game->field->blocks[7][4]  != NULL, @"2段落ちた");
+    STAssertTrue(game->field->blocks[16][4] != NULL, @"1段落ちた");
+    
+    /*
+    for (int i = 0; i < FIELD_HEIGHT; i++) {
+        for (int j = 0; j < FIELD_WIDTH; j++) {
+            STAssertTrue(game->field->blocks[i][j] == NULL, @"[testDelete] x:%d y:%d is not NULL", j, i);
+        }
+    }
+     */
+}
+
 @end

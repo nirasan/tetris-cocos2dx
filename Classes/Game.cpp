@@ -8,12 +8,15 @@ Game::Game()
 {
     field = new Field();
     chunk = new Chunk();
+    deletableLines = new bool[FIELD_HEIGHT];
+    for (int i = 0; i < FIELD_HEIGHT; i++) deletableLines[i] = false;
 }
 
 Game::~Game()
 {
     delete field;
     delete chunk;
+    delete[] deletableLines;
 }
 
 void Game::moveLeft()
@@ -133,3 +136,44 @@ bool Game::isConflict()
     }
     return false;
 }
+
+void Game::checkDeletableLines()
+{
+    for (int i = 1; i < FIELD_HEIGHT; i++) {
+        deletableLines[i] = false;
+        bool check = true;
+        for (int j = FIELD_WIDTH_LEFT_INDEX; j <= FIELD_WIDTH_RIGHT_INDEX; j++) {
+            if (field->blocks[i][j] == NULL) {
+                CCLOG("[checkDeletableLines] x:%d y:%d is NULL", j, i);
+                check = false;
+                break;
+            }
+        }
+        if (check) deletableLines[i] = true;
+    }
+}
+
+void Game::deleteDeletableLines()
+{
+    for (int i = 0; i < FIELD_HEIGHT; i++) {
+        if (!deletableLines[i]) continue;
+        // delete blocks
+        for (int j = FIELD_WIDTH_LEFT_INDEX; j <= FIELD_WIDTH_RIGHT_INDEX; j++) {
+            if (field->blocks[i][j] != NULL) {
+                delete field->blocks[i][j];
+                field->blocks[i][j] = NULL;
+            }
+        }
+        // copy block from upper
+        for (int j = i; j > 0; j--) {
+            for (int k = FIELD_WIDTH_LEFT_INDEX; k <= FIELD_WIDTH_RIGHT_INDEX; k++) {
+                if (field->blocks[j-1][k] != NULL) {
+                    field->blocks[j][k] = field->blocks[j-1][k];
+                    field->blocks[j-1][k] = NULL;
+                }
+            }
+        }
+        deletableLines[i] = false;
+    }
+}
+
