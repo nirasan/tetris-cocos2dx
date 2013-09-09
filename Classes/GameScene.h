@@ -5,6 +5,11 @@
 
 class GameScene : public cocos2d::CCLayer
 {
+private:
+    void makeControlButton();
+    void tapMoveLeft();
+    void tapMoveRight();
+    
 public:
     virtual bool init();
     static cocos2d::CCScene* scene();
