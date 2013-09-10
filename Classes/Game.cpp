@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Config.h"
+#include "Chunk.h"
 #include "cocos2d.h"
 
 USING_NS_CC;
@@ -19,6 +20,14 @@ Game::~Game()
     delete[] deletableLines;
 }
 
+void Game::makeChunk(int x, int y, int numbers[])
+{
+    chunk->setPos(x, y);
+    int shape = rand() % Chunk::kShape_last;
+    //shape = Chunk::kShape_rl;
+    Chunk::makeBlocks(chunk->blocks, shape, numbers);
+}
+
 void Game::moveLeft()
 {
     if (canMoveLeft())
@@ -36,7 +45,7 @@ void Game::moveUnder()
     if (canMoveUnder()) {
         chunk->posY = chunk->posY + 1;
         
-        copyBlocks();
+        // if (!canMoveUnder()) copyBlocks();
     }
 }
 
@@ -74,11 +83,13 @@ bool Game::canMoveUnder()
 {
     bool checked = false;
     for (int i = 0; i < CHUNK_WIDTH; i++) {
-        for (int j = CHUNK_HEIGHT - 1; j > 0; j--) {
-            if (chunk->blocks[i][j] != NULL) {
+        for (int j = CHUNK_HEIGHT - 1; j >= 0; j--) {
+            if (chunk->blocks[j][i] != NULL) {
+                CCLOG("[canMoveUnder] x:%d y:%d", j, i);
+                int underX = chunk->posX + i;
                 int underY = chunk->posY + j + 1;
                 if (underY > FIELD_HEIGHT - 1) return false;
-                if (field->blocks[underY][i] != NULL) return false;
+                if (field->blocks[underY][underX] != NULL) return false;
                 checked = true;
                 break;
             }
@@ -94,6 +105,7 @@ void Game::copyBlocks()
             int y = i + chunk->posY;
             int x = j + chunk->posX;
             if (chunk->blocks[i][j] != NULL) {
+                CCLOG("[copyBlocks] posX:%d posY:%d i:%d j:%d x:%d y:%d", chunk->posX, chunk->posY, i, j, x, y);
                 field->blocks[y][x] = chunk->blocks[i][j];
                 chunk->blocks[i][j] = NULL;
             }

@@ -17,6 +17,8 @@ public:
     Game();
     ~Game();
     
+    void makeChunk(int x, int y, int numbers[]);
+    
     void moveLeft();
     void moveRight();
     void moveUnder();

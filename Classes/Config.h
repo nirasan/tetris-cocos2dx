@@ -4,6 +4,9 @@
 #define CHUNK_HEIGHT 4
 #define CHUNK_WIDTH  4
 
+#define CHUNK_START_X 6
+#define CHUNK_START_Y 0
+
 #define FIELD_HEIGHT 24
 #define FIELD_WIDTH  16
 

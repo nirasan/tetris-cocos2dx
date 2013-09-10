@@ -19,9 +19,28 @@ bool GameScene::init()
         return false;
     }
     
+    makeField();
+    
     makeControlButton();
     
+    startGame();
+    
     return true;
+}
+
+void GameScene::makeField()
+{
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    for (int i = 0; i < FIELD_HEIGHT; i++) {
+        for (int j = 0; j <= FIELD_WIDTH_RIGHT_INDEX - FIELD_WIDTH_LEFT_INDEX; j++) {
+            CCLabelTTF* b = CCLabelTTF::create("□", "Arial", 12.0);
+            b->setPosition(ccp(winSize.width * (0.32 + j * 0.04), winSize.height * (0.1 + i * 0.04)));
+            b->setColor(ccc3(128, 128, 128));
+            this->addChild(b);
+        }
+    }
+    
 }
 
 void GameScene::makeControlButton()
@@ -67,4 +86,72 @@ void GameScene::tapTurnLeft()
 void GameScene::tapTurnRight()
 {
     
+}
+
+void GameScene::startGame()
+{
+    game = new Game();
+    makeChunk();
+    this->schedule(schedule_selector(GameScene::moveUnder), 1);
+}
+
+void GameScene::makeChunk()
+{
+    int number = lastBlockNumber+1;
+    int numbers[] = { number, number+1, number+2, number+3 };
+    game->makeChunk(CHUNK_START_X, CHUNK_START_Y, numbers);
+    
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            if (game->chunk->blocks[i][j] != NULL) {
+                CCLabelTTF* b = CCLabelTTF::create("■", "Arial", 12.0);
+                int x = CHUNK_START_X - FIELD_WIDTH_LEFT_INDEX + j;
+                int y = (FIELD_HEIGHT - 1) - (CHUNK_START_Y + i); // blocksの座標と画面の座標の開始位置が異なるので調整
+                CCLOG("[makeChunk]=== x:%d y:%d", x, y);
+                b->setPosition(ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                //b->setColor(ccc3(128, 128, 128));
+                b->setTag(number);
+                number++;
+                this->addChild(b);
+            }
+        }
+    }
+    
+    lastBlockNumber += 4;
+}
+
+void GameScene::moveUnder()
+{
+    CCLOG("[moveUnder] x:%d y:%d", game->chunk->posX, game->chunk->posY);
+    game->moveUnder();
+    moveChunk();
+    if (!game->canMoveUnder()) {
+        game->copyBlocks();
+        this->unschedule(schedule_selector(GameScene::moveUnder));
+        makeChunk();
+        this->schedule(schedule_selector(GameScene::moveUnder), 1);
+    }
+}
+
+void GameScene::moveChunk()
+{
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    for (int i = 0; i < CHUNK_HEIGHT; i++) {
+        for (int j = 0; j < CHUNK_WIDTH; j++) {
+            if (game->chunk->blocks[i][j] != NULL) {
+                Block* b = game->chunk->blocks[i][j];
+                int number = b->getNumber();
+                CCLabelTTF* l = (CCLabelTTF*)this->getChildByTag(number);
+                int x = game->chunk->posX - FIELD_WIDTH_LEFT_INDEX + j;
+                int y = (FIELD_HEIGHT - 1) - (game->chunk->posY + i);
+                //l->setPosition(ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                CCLOG("[showChunk]=== x:%d y:%d", x, y);
+                CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                l->runAction(action);
+            }
+        }
+    }
 }
