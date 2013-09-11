@@ -149,8 +149,9 @@ bool Game::isConflict()
     return false;
 }
 
-void Game::checkDeletableLines()
+bool Game::checkDeletableLines()
 {
+    bool ret = false;
     for (int i = 1; i < FIELD_HEIGHT; i++) {
         deletableLines[i] = false;
         bool check = true;
@@ -161,8 +162,11 @@ void Game::checkDeletableLines()
                 break;
             }
         }
-        if (check) deletableLines[i] = true;
+        if (check) {
+            deletableLines[i] = ret = true;
+        }
     }
+    return ret;
 }
 
 void Game::deleteDeletableLines()

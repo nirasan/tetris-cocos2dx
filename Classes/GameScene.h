@@ -22,8 +22,11 @@ private:
     
     void makeChunk();
     void moveChunk();
+    void makeAndMoveChunk();
     
     void moveUnder();
+    
+    void deleteLines();
     
 public:
     virtual bool init();

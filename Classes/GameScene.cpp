@@ -95,8 +95,7 @@ void GameScene::tapTurnRight()
 void GameScene::startGame()
 {
     game = new Game();
-    makeChunk();
-    this->schedule(schedule_selector(GameScene::moveUnder), 1);
+    this->scheduleOnce(schedule_selector(GameScene::makeAndMoveChunk), 1);
 }
 
 void GameScene::makeChunk()
@@ -128,14 +127,15 @@ void GameScene::makeChunk()
 
 void GameScene::moveUnder()
 {
-    CCLOG("[moveUnder] x:%d y:%d", game->chunk->posX, game->chunk->posY);
-    game->moveUnder();
-    moveChunk();
-    if (!game->canMoveUnder()) {
+    // CCLOG("[moveUnder] x:%d y:%d", game->chunk->posX, game->chunk->posY);
+    if (game->canMoveUnder()) {
+        game->moveUnder();
+        moveChunk();
+    } else {
         game->copyBlocks();
         this->unschedule(schedule_selector(GameScene::moveUnder));
-        makeChunk();
-        this->schedule(schedule_selector(GameScene::moveUnder), 1);
+        deleteLines();
+        this->scheduleOnce(schedule_selector(GameScene::makeAndMoveChunk), 1);
     }
 }
 
@@ -155,6 +155,53 @@ void GameScene::moveChunk()
                 CCLOG("[showChunk]=== x:%d y:%d", x, y);
                 CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
                 l->runAction(action);
+            }
+        }
+    }
+}
+
+void GameScene::makeAndMoveChunk()
+{
+    makeChunk();
+    this->schedule(schedule_selector(GameScene::moveUnder), 0.25);
+}
+
+void GameScene::deleteLines()
+{
+    if (game->checkDeletableLines())
+    {
+        for (int i = 0; i < FIELD_HEIGHT; i++)
+        {
+            if (game->deletableLines[i])
+            {
+                for (int j = 0; j < FIELD_WIDTH; j++)
+                {
+                    if (game->field->blocks[i][j] != NULL)
+                    {
+                        Block* b = game->field->blocks[i][j];
+                        int number = b->getNumber();
+                        
+                        this->removeChildByTag(number);
+                    }
+                }
+            }
+        }
+        
+        game->deleteDeletableLines();
+        
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        
+        for (int i = 0; i < FIELD_HEIGHT; i++) {
+            for (int j = 0; j < FIELD_WIDTH; j++) {
+                if (game->field->blocks[i][j] != NULL) {
+                    Block* b = game->field->blocks[i][j];
+                    int number = b->getNumber();
+                    CCLabelTTF* l = (CCLabelTTF*)this->getChildByTag(number);
+                    int x = j - FIELD_WIDTH_LEFT_INDEX;
+                    int y = (FIELD_HEIGHT - 1) - i;
+                    CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                    l->runAction(action);
+                }
             }
         }
     }

@@ -34,7 +34,7 @@ public:
 
     bool isConflict();
     
-    void checkDeletableLines();
+    bool checkDeletableLines();
     void deleteDeletableLines();
 };
 
