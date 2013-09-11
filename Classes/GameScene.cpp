@@ -70,22 +70,26 @@ void GameScene::makeControlButton()
 
 void GameScene::tapMoveLeft()
 {
-    
+    game->moveLeft();
+    moveChunk();
 }
 
 void GameScene::tapMoveRight()
 {
-    
+    game->moveRight();
+    moveChunk();
 }
 
 void GameScene::tapTurnLeft()
 {
-    
+    game->chunk->turnLeft();
+    moveChunk();
 }
 
 void GameScene::tapTurnRight()
 {
-    
+    game->chunk->turnRight();
+    moveChunk();
 }
 
 void GameScene::startGame()
