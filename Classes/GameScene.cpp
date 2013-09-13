@@ -151,10 +151,10 @@ void GameScene::moveChunk()
                 CCLabelTTF* l = (CCLabelTTF*)this->getChildByTag(number);
                 int x = game->chunk->posX - FIELD_WIDTH_LEFT_INDEX + j;
                 int y = (FIELD_HEIGHT - 1) - (game->chunk->posY + i);
-                //l->setPosition(ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                l->setPosition(ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
                 CCLOG("[showChunk]=== x:%d y:%d", x, y);
-                CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
-                l->runAction(action);
+                // CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
+                // l->runAction(action);
             }
         }
     }
