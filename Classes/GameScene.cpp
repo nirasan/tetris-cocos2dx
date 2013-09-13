@@ -135,6 +135,7 @@ void GameScene::moveUnder()
         game->copyBlocks();
         this->unschedule(schedule_selector(GameScene::moveUnder));
         deleteLines();
+        resetIfGameover();
         this->scheduleOnce(schedule_selector(GameScene::makeAndMoveChunk), 1);
     }
 }
@@ -202,6 +203,17 @@ void GameScene::deleteLines()
                     CCMoveTo* action = CCMoveTo::create(0.2, ccp(winSize.width * (0.32 + x * 0.04), winSize.height * (0.1 + y * 0.04)));
                     l->runAction(action);
                 }
+            }
+        }
+    }
+}
+
+void GameScene::resetIfGameover()
+{
+    for (int i = 0; i < FIELD_HEIGHT_UPPER_INDEX; i++) {
+        for (int j = 0; j < FIELD_WIDTH; j++) {
+            if (game->field->blocks[i][j] != NULL) {
+                CCDirector::sharedDirector()->replaceScene((CCScene*)GameScene::create());
             }
         }
     }

@@ -28,6 +28,8 @@ private:
     
     void deleteLines();
     
+    void resetIfGameover();
+    
 public:
     virtual bool init();
     static cocos2d::CCScene* scene();
